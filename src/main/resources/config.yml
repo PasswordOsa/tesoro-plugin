@@ -1,0 +1,290 @@
+# ═══════════════════════════════════════════════
+#  TreasureQuest - configuración
+#  Todos los textos usan MiniMessage (colores, degradados, clicks).
+# ═══════════════════════════════════════════════
+
+# ── Eventos globales aleatorios ──
+events:
+  enabled: true
+  min-interval-minutes: 20     # tiempo mínimo entre eventos
+  max-interval-minutes: 40     # tiempo máximo entre eventos
+  min-players: 1
+  max-concurrent: 3
+  worlds: [world]              # mundos donde pueden aparecer (solo overworld)
+  min-distance: 300            # distancia mínima desde el spawn
+  max-distance: 3000
+  weights:                     # probabilidad relativa por tier
+    tier1: 60
+    tier2: 30
+    tier3: 10
+
+# ── Mapas regalados al azar a jugadores conectados ──
+random-gifts:
+  enabled: true
+  interval-minutes: 45
+  chance: 60                   # % de que ocurra en cada intervalo
+  weights:
+    tier1: 55
+    tier2: 25
+    tier3: 12
+    magic: 6
+    legendary: 2
+
+# ── Mapas del tesoro (item) ──
+maps:
+  duration-minutes: 30         # tiempo que dura el tesoro tras activar el mapa
+  name: "<gradient:#f7971e:#ffd200><bold>Mapa del Tesoro</bold></gradient> <dark_gray>- %tier%"
+  lore:
+    - "<gray>Dificultad: <yellow>%stars%"
+    - "<gray>Mundo: <white>%world%"
+    - "<gray>Coordenadas: <yellow>X: %x%  Z: %z%"
+    - ""
+    - "<green>▶ Clic derecho para activar el tesoro"
+    - "<dark_gray>Un solo uso. ¡Cuidado con los guardianes!"
+
+# ── Tienda (/tq shop). Los tesoros personalizados con precio se añaden solos ──
+shop:
+  items:
+    tier1:
+      tier: tier1
+      price: 500
+      icon: MAP
+    tier2:
+      tier: tier2
+      price: 1500
+      icon: MAP
+    tier3:
+      tier: tier3
+      price: 4000
+      icon: FILLED_MAP
+    magic:
+      tier: magic
+      price: 10000
+      icon: ENDER_EYE
+    legendary:
+      tier: legendary
+      price: 25000
+      icon: NETHER_STAR
+
+# ── Tiers / tipos de cofre ──
+# chest / pedestal / decor: materiales   | lock-until-cleared: cofre bloqueado hasta matar guardianes
+# guardians: mobs normales (type, amount, name, health, damage, gear=NONE|LEATHER|IRON|DIAMOND|NETHERITE)
+# boss: un jefe único (mismas opciones, se ve más grande y brilla)
+# rewards.items: "MATERIAL:cantidad_o_min-max:probabilidad%"
+# rewards.commands: comandos de consola, usa %player%
+tiers:
+  tier1:
+    display: "<green><bold>Tesoro Común</bold> <dark_gray>[<green>Tier 1<dark_gray>]"
+    bar-color: GREEN
+    difficulty: 1
+    duration-minutes: 25
+    chest: CHEST
+    pedestal: MOSSY_COBBLESTONE
+    decor: TORCH
+    map-item: MAP
+    map-distance: {min: 200, max: 800}
+    lock-until-cleared: false
+    rewards:
+      money: "100-300"
+      xp: 50
+      items:
+        - "IRON_INGOT:3-8:100"
+        - "GOLD_INGOT:2-5:70"
+        - "BREAD:5-12:100"
+        - "DIAMOND:1-2:15"
+      commands: []
+
+  tier2:
+    display: "<aqua><bold>Tesoro Raro</bold> <dark_gray>[<aqua>Tier 2<dark_gray>]"
+    bar-color: BLUE
+    difficulty: 2
+    duration-minutes: 25
+    chest: BARREL
+    pedestal: STONE_BRICKS
+    decor: LANTERN
+    map-item: MAP
+    map-distance: {min: 400, max: 1500}
+    lock-until-cleared: false
+    guardians:
+      zombies:
+        type: ZOMBIE
+        amount: 3
+        name: "<gray>Guardián Caído"
+        health: 24
+        gear: IRON
+    rewards:
+      money: "400-900"
+      xp: 150
+      items:
+        - "DIAMOND:2-4:80"
+        - "EMERALD:4-10:80"
+        - "GOLDEN_APPLE:1-2:50"
+        - "IRON_BLOCK:1-2:50"
+        - "ENDER_PEARL:2-4:40"
+      commands: []
+
+  tier3:
+    display: "<light_purple><bold>Tesoro Épico</bold> <dark_gray>[<light_purple>Tier 3<dark_gray>]"
+    bar-color: PURPLE
+    difficulty: 3
+    duration-minutes: 30
+    chest: ENDER_CHEST
+    pedestal: DEEPSLATE_BRICKS
+    decor: SOUL_LANTERN
+    map-item: FILLED_MAP
+    map-distance: {min: 800, max: 2500}
+    lock-until-cleared: true
+    guardians:
+      skeletons:
+        type: SKELETON
+        amount: 3
+        name: "<dark_purple>Arquero Espectral"
+        health: 30
+        gear: IRON
+      zombies:
+        type: ZOMBIE
+        amount: 2
+        name: "<dark_purple>Centinela"
+        health: 40
+        damage: 7
+        gear: DIAMOND
+    rewards:
+      money: "1500-3500"
+      xp: 400
+      items:
+        - "DIAMOND:4-8:100"
+        - "EMERALD:8-16:80"
+        - "ENCHANTED_GOLDEN_APPLE:1:30"
+        - "NETHERITE_SCRAP:1-2:35"
+        - "EXPERIENCE_BOTTLE:8-16:70"
+      commands: []
+
+  magic:
+    display: "<gradient:#a18cd1:#fbc2eb><bold>Cofre Mágico</bold></gradient> <dark_gray>[<light_purple>✦<dark_gray>]"
+    bar-color: PINK
+    difficulty: 4
+    duration-minutes: 35
+    chest: ENDER_CHEST
+    pedestal: AMETHYST_BLOCK
+    decor: SEA_LANTERN
+    map-item: ENDER_EYE
+    map-distance: {min: 1000, max: 3000}
+    lock-until-cleared: true
+    guardians:
+      witches:
+        type: WITCH
+        amount: 2
+        name: "<light_purple>Hechicera Arcana"
+        health: 40
+      vex:
+        type: VEX
+        amount: 3
+        name: "<aqua>Espíritu"
+        health: 14
+    boss:
+      type: WITHER_SKELETON
+      name: "<gradient:#a18cd1:#fbc2eb><bold>Archimago Corrupto</bold></gradient>"
+      health: 160
+      damage: 10
+      gear: NETHERITE
+    rewards:
+      money: "4000-8000"
+      xp: 800
+      items:
+        - "NETHERITE_INGOT:1-2:60"
+        - "DIAMOND_BLOCK:1-2:70"
+        - "TOTEM_OF_UNDYING:1:50"
+        - "ENCHANTED_GOLDEN_APPLE:2-3:60"
+        - "EXPERIENCE_BOTTLE:24-40:100"
+      commands: []
+
+  legendary:
+    display: "<gradient:#f7971e:#ffd200><bold>Cofre Legendario</bold></gradient> <dark_gray>[<gold>★<dark_gray>]"
+    bar-color: YELLOW
+    difficulty: 5
+    duration-minutes: 40
+    chest: CHEST
+    pedestal: GILDED_BLACKSTONE
+    decor: SHROOMLIGHT
+    map-item: NETHER_STAR
+    map-distance: {min: 1500, max: 4000}
+    lock-until-cleared: true
+    guardians:
+      wither:
+        type: WITHER_SKELETON
+        amount: 4
+        name: "<dark_red>Verdugo Eterno"
+        health: 60
+        damage: 9
+        gear: NETHERITE
+    boss:
+      type: ZOMBIE
+      name: "<gradient:#f7971e:#ff0000><bold>Rey Corrupto</bold></gradient>"
+      health: 400
+      damage: 14
+      gear: NETHERITE
+    rewards:
+      money: "10000-20000"
+      xp: 2000
+      items:
+        - "NETHERITE_INGOT:3-5:100"
+        - "ENCHANTED_GOLDEN_APPLE:4-8:100"
+        - "TOTEM_OF_UNDYING:1-2:100"
+        - "DIAMOND_BLOCK:3-6:100"
+        - "ELYTRA:1:25"
+      commands:
+        - "give %player% minecraft:nether_star 1"
+
+# ── Mensajes ──
+messages:
+  prefix: "<gradient:#f7971e:#ffd200><bold>TreasureQuest</bold></gradient> <dark_gray>»</dark_gray> "
+  no-permission: "%prefix%<red>No tienes permiso."
+  only-player: "%prefix%<red>Solo jugadores pueden usar esto."
+  unknown-tier: "%prefix%<red>Tier desconocido: <white>%tier%"
+  unknown-custom: "%prefix%<red>Tesoro personalizado desconocido: <white>%id%"
+  usage: "%prefix%<yellow>Uso: <white>%usage%"
+  reloaded: "%prefix%<green>Configuración recargada. Tiers cargados: <white>%n%"
+  announce:
+    - " "
+    - "<gradient:#f7971e:#ffd200><bold>⚑ ¡UN TESORO HA APARECIDO! ⚑</bold></gradient>"
+    - " <dark_gray>▸ <gray>Tipo: %tier% <yellow>%stars%"
+    - " <dark_gray>▸ <gray>Mundo: <white>%world%"
+    - " <dark_gray>▸ <gray>Coordenadas: <click:run_command:'/tq track %num%'><hover:show_text:'<yellow>Clic para rastrear'><yellow><bold>X: %x%  Y: %y%  Z: %z%</bold></yellow></hover></click>"
+    - " <dark_gray>▸ <gray>Desaparece en: <white>%time% min"
+    - " "
+  title-main: "%tier%"
+  title-sub: "<yellow>X: %x%  Z: %z% <dark_gray>• <white>%world%"
+  bossbar: "%tier% <dark_gray>#%num% <gray>⏳ <white>%time% <dark_gray>| <red>☠ %mobs%"
+  track: "<yellow><bold>%arrow%</bold> <white>%dist% bloques <dark_gray>| %tier% <dark_gray>#%num% <dark_gray>| %heat%"
+  track-otherworld: "<yellow>El tesoro #%num% está en el mundo <white>%world%"
+  heat-hot: "<red>¡Ardiendo!"
+  heat-warm: "<gold>Caliente"
+  heat-cold: "<aqua>Frío"
+  track-on: "%prefix%<green>Rastreando el tesoro <white>#%num%<green>. Sigue la flecha en tu pantalla."
+  track-off: "%prefix%<gray>Rastreo desactivado."
+  no-events: "%prefix%<red>No hay tesoros activos ahora mismo."
+  locked: "%prefix%<red>El cofre está sellado. ¡Derrota a los <white>%mobs%<red> guardianes restantes!"
+  unlocked: "%prefix%<green>¡Los guardianes han caído! El cofre <white>#%num%<green> está abierto."
+  claimed-global: "%prefix%<green>%player% <gray>encontró el tesoro %tier% <dark_gray>#%num%<gray>. ¡Felicidades!"
+  rewards: "%prefix%<gray>Recompensas: <white>%list%"
+  expired: "%prefix%<gray>El tesoro %tier% <dark_gray>#%num% <gray>se ha desvanecido..."
+  gift: "%prefix%<gold>¡Has recibido un mapa del tesoro! %tier%"
+  map-activated: "%prefix%<green>¡Tesoro activado! %tier% <gray>en <yellow>X: %x% Z: %z% <gray>(%world%). Tienes <white>%time% min<gray>."
+  map-already: "%prefix%<yellow>Este tesoro ya está activo. Rastreo actualizado."
+  map-invalid: "%prefix%<red>Este mapa ya no es válido."
+  map-used: "%prefix%<red>Este mapa ya fue usado."
+  map-given: "%prefix%<green>Mapa entregado a <white>%player%<green>."
+  shop-no-money: "%prefix%<red>No tienes suficiente. Precio: <white>%price%"
+  shop-bought: "%prefix%<green>Compraste <white>%name%<green> por <yellow>%price%<green>."
+  started: "%prefix%<green>Evento <white>%tier%<green> iniciado en <white>%world%<green>."
+  stopped: "%prefix%<green>Eventos detenidos: <white>%n%"
+  custom-created: "%prefix%<green>Tesoro <white>%id%<green> creado. Coloca los items del cofre y cierra el menú para guardar."
+  custom-exists: "%prefix%<red>Ya existe un tesoro con ese id."
+  custom-saved: "%prefix%<green>Tesoro <white>%id%<green> guardado con <white>%n%<green> items."
+  custom-deleted: "%prefix%<green>Tesoro <white>%id%<green> eliminado."
+  custom-updated: "%prefix%<green>Tesoro <white>%id%<green> actualizado."
+  menu-main-title: "<gradient:#f7971e:#ffd200><bold>TreasureQuest"
+  menu-events-title: "<aqua><bold>Eventos activos"
+  menu-shop-title: "<green><bold>Tienda de mapas"
+  menu-admin-title: "<light_purple><bold>Panel de administración"
+  menu-editor-title: "<gold><bold>Editor de cofre: %id%"

@@ -1,0 +1,21 @@
+name: TreasureQuest
+version: '${project.version}'
+main: com.treasurequest.TreasureQuest
+api-version: '1.21'
+description: Eventos de búsqueda del tesoro, mapas, cofres por niveles y jefes.
+authors: [TreasureQuest]
+softdepend: [Vault]
+
+commands:
+  treasure:
+    description: Comando principal de TreasureQuest
+    usage: /<command> [menu|shop|events|track|top|start|stop|map|custom|reload]
+    aliases: [tq, tesoro, treasurequest]
+
+permissions:
+  treasurequest.use:
+    description: Usar menús, tienda y rastreo
+    default: true
+  treasurequest.admin:
+    description: Administrar eventos, mapas y tesoros personalizados
+    default: op
